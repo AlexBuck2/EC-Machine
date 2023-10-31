@@ -16,6 +16,7 @@ public class Main {
 
         for (int i = 0; i < ecMachine.length; i += 4) {
             int intialIndex = ecMachine[i];
+
             int index2 = ecMachine[i + 1];
             int index3 = ecMachine[i + 2];
             int positionIndex = ecMachine[i + 3];
@@ -30,6 +31,184 @@ public class Main {
         }
         return ecMachine[0];
     }
+
+    public static int newEcCalculator(int[] ecMachine, int holder) {
+        for (int i = 0; i < ecMachine.length; i+=4) {
+            int ABCDE = ecMachine[i];
+            int A = ABCDE / 10000;
+            int B = (ABCDE / 1000) % 10;
+            int C = (ABCDE / 100) % 10;
+            int intialIndex = ABCDE % 100;
+
+            int index2 = ecMachine[i + 1];
+            int index3 = ecMachine[i + 2];
+            int positionIndex = ecMachine[i + 3];
+
+
+            if (A == 0 && B == 0 && C == 0) {
+                //everything position
+                if (intialIndex == 1) {
+                    ecMachine[positionIndex] = ecMachine[index2] + ecMachine[index3];
+                } else if (intialIndex == 2) {
+                    ecMachine[positionIndex] = ecMachine[index2] * ecMachine[index3];
+                } else if (intialIndex == 99) {
+                    break;
+                }
+
+
+            }
+            if (A == 0 && B == 0 && C == 1) {
+                //first value is immediate mode
+                if (intialIndex == 1) {
+                    ecMachine[positionIndex] = ecMachine[i + 1] + ecMachine[index3];
+                } else if (intialIndex == 2) {
+                    ecMachine[positionIndex] = ecMachine[i + 1] * ecMachine[index3];
+                } else if (intialIndex == 99) {
+                    break;
+                }
+
+
+            }
+            if (A == 0 && B == 1 && C == 1) {
+                //both values are immediate mode
+                if (intialIndex == 1) {
+                    ecMachine[positionIndex] = ecMachine[i + 1] + ecMachine[i + 2];
+                } else if (intialIndex == 2) {
+                    ecMachine[positionIndex] = ecMachine[i + 1] * ecMachine[i + 2];
+                } else if (intialIndex == 99) {
+                    break;
+                }
+
+            }
+            if (A == 1 && B == 1 && C == 1) {
+                //all values are immediate
+                if (intialIndex == 1) {
+                    ecMachine[i + 3] = ecMachine[i + 1] + ecMachine[i + 2];
+                } else if (intialIndex == 2) {
+                    ecMachine[i + 3] = ecMachine[i + 1] * ecMachine[i + 2];
+                } else if (intialIndex == 99) {
+                    break;
+                }
+            }
+            if (A == 1 && B == 1 && C == 0) {
+                //all values are immediate
+                if (intialIndex == 1) {
+                    ecMachine[i + 3] = ecMachine[i + 1] + ecMachine[index3];
+                } else if (intialIndex == 2) {
+                    ecMachine[i + 3] = ecMachine[i + 1] * ecMachine[index3];
+                } else if (intialIndex == 99) {
+                    break;
+                }
+            }
+
+            if (A == 1 && B == 0 && C == 0) {
+                //all values are immediate      //all values are immediate
+                if (intialIndex == 1) {
+                    ecMachine[i + 3] = ecMachine[index2] + ecMachine[index3];
+                } else if (intialIndex == 2) {
+                    ecMachine[i + 3] = ecMachine[index2] * ecMachine[index3];
+                } else if (intialIndex == 99) {
+                    break;
+                }
+            }
+
+            if (A == 1 && B == 0 && C == 1) {
+                //all values are immediate
+                if (intialIndex == 1) {
+                    ecMachine[i + 3] = ecMachine[index2] + ecMachine[i + 2];
+                } else if (intialIndex == 2) {
+                    ecMachine[i + 3] = ecMachine[index2] * ecMachine[i + 2];
+                } else if (intialIndex == 99) {
+                    break;
+                }
+            }
+
+            if (A == 0 && B == 1 && C == 0) {
+                //all values are immediate
+                if (intialIndex == 1) {
+                    ecMachine[positionIndex] = ecMachine[i + 1] + ecMachine[index2];
+                } else if (intialIndex == 2) {
+                    ecMachine[positionIndex] = ecMachine[i + 1] * ecMachine[index2];
+                } else if (intialIndex == 99) {
+                    break;
+                }
+            }
+            if (A == 1 && B == 0 && C == 1) {
+                if (intialIndex == 1) {
+                    ecMachine[i + 3] = ecMachine[index2] + ecMachine[i + 2];
+                } else if (intialIndex == 2) {
+                    ecMachine[i + 3] = ecMachine[index2] * ecMachine[i + 2];
+                } else if (intialIndex == 99) {
+                    break;
+                }
+                //all values are immediate
+            }
+        }
+        return ecMachine[0];
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+     *c static int ecCalculatorA(int[] ecMachine) {
+     *         //ecMachine[1] = 12;
+     *         //ecMachine[2] = 2;
+     *
+     *         for (int i = 0; i < ecMachine.length; i += 4) {
+     *             int intialIndex = ecMachine[i];
+     *             int index2 = ecMachine[i + 1];
+     *             int index3 = ecMachine[i + 2];
+     *             int positionIndex = ecMachine[i + 3];
+     *
+     *             if (intialIndex == 1) {
+     *                 ecMachine[positionIndex] = ecMachine[index2] + ecMachine[index3];
+     *             } else if (intialIndex == 2) {
+     *                 ecMachine[positionIndex] = ecMachine[index2] * ecMachine[index3];
+     *             } else if (intialIndex == 99) {
+     *                 break;
+     *             }
+     *         }
+     *         return ecMachine[0];
+     *     }
+     * for(int i = 0; i < ecMachine.length; i +=4){
+     *     int number = ecMachine[i];
+     *     String numberStr = String.valueOf(number)
+           int length = numberStr.length();
+            while(length > 0){
+                if(length == 5)
+                    if(numberStr.substring(1,2)).equals("1"){
+                        //set postion mode
+                else{
+                    positionMode = 0;
+               }
+                if(length == 4){
+
+            }
+
+     }
+     }
+     *
+     *
+     * }
+
+
+     }
+     *
+     *
+     * @param ecMachine
+     * @param target
+     * @return
+     */
     public static String input(int [] ecMachine,int target){
         for(int i = 0; i< 99; i++){
           int[] memory = clone(ecMachine);
@@ -67,4 +246,4 @@ public class Main {
         ecMachine.set(index + 3, product);
     }
 
-     */
+
